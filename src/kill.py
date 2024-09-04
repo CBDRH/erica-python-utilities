@@ -1,25 +1,6 @@
 import win32api
 import win32job
 
-def default_set_memory_limit(memory_limit_mb: int) -> None:
-	"""
-	Sets the default memory limit for the current process.
-
-	Parameters:
-		memory_limit_mb (int): The memory limit in megabytes.
-
-	Returns:
-		None
-	"""
-	hjob = win32job.CreateJobObject(None, "")  # type: win32job.HANDLE
-	info = win32job.QueryInformationJobObject(hjob, win32job.JobObjectExtendedLimitInformation)  # type: dict
-	info['ProcessMemoryLimit'] = memory_limit_mb * 1024 * 1024 * 1024  # type: int
-	info['BasicLimitInformation']['LimitFlags'] |= win32job.JOB_OBJECT_LIMIT_PROCESS_MEMORY  # type: int
-
-	win32job.SetInformationJobObject(hjob, win32job.JobObjectExtendedLimitInformation, info)  # type: None
-
-	hproc = win32api.GetCurrentProcess()  # type: int
-	win32job.AssignProcessToJobObject(hjob, hproc)  # type: None
 
 def set_memory_limit(memory_limit_gb: int = 2) -> callable:
 	"""

@@ -28,7 +28,7 @@ Another example:
 ```python
 from kill import set_memory_limit
 
-@set_memory_limit(8)  # Set the memory limit to 2 GB
+@set_memory_limit(2)  # Set the memory limit to 2 GB
 def some_function(blah, blah2):
     # code here
 
